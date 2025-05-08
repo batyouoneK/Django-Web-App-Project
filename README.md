@@ -346,5 +346,5 @@ Proje, Bootstrap 5 kullanarak modern ve responsive bir tasarım sunar. Ana şabl
 
 Veritabanı şeması, `models.py` dosyasında tanımlanan modellere dayanır. PostgreSQL veritabanı kullanılır ve veritabanı bağlantısı `settings.py` dosyasında yapılandırılır.
 
-Django ORM, veritabanı tabloları ile Python nesneleri arasında bir soyutlama katmanı sağlar. Bu sayede, karmaşık SQL sorguları yazmak yerine Python kodu kullanarak veritabanı işlemleri gerçekleştirebilirsiniz.
 
+Hazırlayan: Batuhan Kızıltaş
