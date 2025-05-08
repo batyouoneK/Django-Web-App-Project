@@ -1,0 +1,147 @@
+{% extends 'cv_app/base.html' %}
+{% load custom_filters %}
+
+{% block title %}All Projects{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'cv_app:home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Projects</li>
+            </ol>
+        </nav>
+        
+        <h1 class="mb-5">All Projects</h1>
+        
+        {% if projects %}
+        <!-- Search and Filter -->
+        <div class="mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" id="projectSearch" class="form-control" placeholder="Search projects...">
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-primary active filter-btn" data-filter="all">All</button>
+                        <button type="button" class="btn btn-outline-primary filter-btn" data-filter="featured">Featured</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projects Grid -->
+        <div class="row" id="projectsGrid">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4 mb-4 project-item {% if project.is_featured %}featured{% endif %}">
+                <div class="card h-100">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex justify-content-center align-items-center" style="height: 160px;">
+                        <i class="fas fa-laptop-code fa-3x text-secondary"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description }}</p>
+                        
+                        {% if project.technologies %}
+                        <div class="mb-3">
+                            {% for tech in project.technologies|split_string %}
+                            <span class="badge bg-secondary mb-1 me-1">{{ tech|strip }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="text-muted small mb-3">
+                            {% if project.start_date %}
+                            <i class="far fa-calendar-alt me-1"></i>
+                            {{ project.start_date|date:"M Y" }}
+                            {% if project.end_date %} - {{ project.end_date|date:"M Y" }}{% endif %}
+                            {% endif %}
+                            
+                            {% if project.is_featured %}
+                            <span class="ms-2 text-primary">
+                                <i class="fas fa-star me-1"></i> Featured
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer bg-transparent border-0">
+                        {% if project.project_url %}
+                        <a href="{{ project.project_url }}" target="_blank" class="btn btn-sm btn-outline-primary">Live Demo</a>
+                        {% endif %}
+                        {% if project.source_code_url %}
+                        <a href="{{ project.source_code_url }}" target="_blank" class="btn btn-sm btn-outline-dark">
+                            <i class="fab fa-github me-1"></i> Source
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% else %}
+        <div class="alert alert-info">No projects have been added yet.</div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Search functionality
+        const searchInput = document.getElementById('projectSearch');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                const searchValue = this.value.toLowerCase();
+                const projectItems = document.querySelectorAll('.project-item');
+                
+                projectItems.forEach(function(item) {
+                    const title = item.querySelector('.card-title').textContent.toLowerCase();
+                    const description = item.querySelector('.card-text').textContent.toLowerCase();
+                    
+                    if (title.includes(searchValue) || description.includes(searchValue)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        if (filterButtons.length > 0) {
+            filterButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    const projectItems = document.querySelectorAll('.project-item');
+                    
+                    projectItems.forEach(function(item) {
+                        if (filter === 'all') {
+                            item.style.display = 'block';
+                        } else if (filter === 'featured') {
+                            if (item.classList.contains('featured')) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

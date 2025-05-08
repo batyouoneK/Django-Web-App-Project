@@ -1,0 +1,304 @@
+{% extends 'cv_app/base.html' %}
+
+{% block title %}Download CV{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+        
+        body {
+            font-size: 12pt;
+            color: #000;
+            background-color: #fff;
+        }
+        
+        .section {
+            padding: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        
+        .card {
+            border: 1px solid #ddd;
+            box-shadow: none;
+        }
+        
+        .print-column {
+            width: 50%;
+            float: left;
+            padding: 0 15px;
+        }
+        
+        .print-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-item:before,
+        .timeline-item:after {
+            display: none;
+        }
+    }
+    
+    .print-version {
+        max-width: 850px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .print-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .print-section {
+        margin-bottom: 30px;
+    }
+    
+    .print-section-title {
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="no-print mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'cv_app:home' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Download CV</li>
+                </ol>
+            </nav>
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Download CV</h1>
+                <div>
+                    <button onclick="window.print()" class="btn btn-primary">
+                        <i class="fas fa-print me-2"></i> Print / Save as PDF
+                    </button>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mb-4">
+                <i class="fas fa-info-circle me-2"></i> This page is formatted for printing. Click the button above to print or save as PDF.
+            </div>
+        </div>
+        
+        <div class="print-version">
+            <!-- Print Header -->
+            <div class="print-header">
+                {% if personal_info %}
+                <h1 class="mb-2">{{ personal_info.full_name }}</h1>
+                <h3 class="text-muted mb-3">{{ personal_info.title }}</h3>
+                
+                <div class="row justify-content-center">
+                    {% if personal_info.email %}
+                    <div class="col-auto mb-2">
+                        <i class="fas fa-envelope me-2"></i> {{ personal_info.email }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if personal_info.phone %}
+                    <div class="col-auto mb-2">
+                        <i class="fas fa-phone me-2"></i> {{ personal_info.phone }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if personal_info.address %}
+                    <div class="col-auto mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i> {{ personal_info.address }}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mt-2">
+                    {% if personal_info.linkedin %}
+                    <a href="{{ personal_info.linkedin }}" class="me-3">
+                        <i class="fab fa-linkedin me-1"></i> LinkedIn
+                    </a>
+                    {% endif %}
+                    
+                    {% if personal_info.github %}
+                    <a href="{{ personal_info.github }}" class="me-3">
+                        <i class="fab fa-github me-1"></i> GitHub
+                    </a>
+                    {% endif %}
+                    
+                    {% if personal_info.website %}
+                    <a href="{{ personal_info.website }}">
+                        <i class="fas fa-globe me-1"></i> Personal Website
+                    </a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="alert alert-warning">No personal information available.</div>
+                {% endif %}
+            </div>
+            
+            <!-- Summary Section -->
+            {% if personal_info and personal_info.summary %}
+            <div class="print-section">
+                <h4 class="print-section-title">Professional Summary</h4>
+                <p>{{ personal_info.summary }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Work Experience Section -->
+            {% if experience_list %}
+            <div class="print-section">
+                <h4 class="print-section-title">Work Experience</h4>
+                {% for experience in experience_list %}
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ experience.position }}</strong>
+                        <span>
+                            {{ experience.start_date|date:"M Y" }} - 
+                            {% if experience.is_current %}Present{% else %}{{ experience.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                    </div>
+                    <div class="mb-1">{{ experience.company }}{% if experience.location %} - {{ experience.location }}{% endif %}</div>
+                    <p class="mb-0">{{ experience.description|linebreaksbr }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- Education Section -->
+            {% if education_list %}
+            <div class="print-section">
+                <h4 class="print-section-title">Education</h4>
+                {% for education in education_list %}
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ education.degree }} in {{ education.field_of_study }}</strong>
+                        <span>
+                            {{ education.start_date|date:"M Y" }} - 
+                            {% if education.is_current %}Present{% else %}{{ education.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                    </div>
+                    <div class="mb-1">{{ education.institution }}{% if education.location %}, {{ education.location }}{% endif %}</div>
+                    {% if education.description %}
+                    <p class="mb-0">{{ education.description|linebreaksbr }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- Skills Section -->
+            {% if skill_list %}
+            <div class="print-section">
+                <h4 class="print-section-title">Skills</h4>
+                <div class="row">
+                    <!-- Technical Skills -->
+                    <div class="col-md-6 mb-3">
+                        <h5>Technical Skills</h5>
+                        <ul>
+                            {% for skill in skill_list %}
+                            {% if skill.category == 'technical' %}
+                            <li>{{ skill.name }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Soft Skills -->
+                    <div class="col-md-6 mb-3">
+                        <h5>Soft Skills & Languages</h5>
+                        <ul>
+                            {% for skill in skill_list %}
+                            {% if skill.category == 'soft' or skill.category == 'language' %}
+                            <li>{{ skill.name }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Projects Section -->
+            {% if project_list %}
+            <div class="print-section">
+                <h4 class="print-section-title">Notable Projects</h4>
+                {% for project in project_list %}
+                {% if forloop.counter <= 3 %}  <!-- Limit to 3 projects for CV -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ project.title }}</strong>
+                        {% if project.start_date %}
+                        <span>
+                            {{ project.start_date|date:"M Y" }}
+                            {% if project.end_date %} - {{ project.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                        {% endif %}
+                    </div>
+                    {% if project.technologies %}
+                    <div class="mb-1">
+                        <em>Technologies: {{ project.technologies }}</em>
+                    </div>
+                    {% endif %}
+                    <p class="mb-0">{{ project.description|truncatewords:50 }}</p>
+                    {% if project.project_url or project.source_code_url %}
+                    <div class="mt-1">
+                        {% if project.project_url %}
+                        <small>Project URL: {{ project.project_url }}</small>
+                        {% endif %}
+                        {% if project.source_code_url %}
+                        <small>{% if project.project_url %} | {% endif %}Source: {{ project.source_code_url }}</small>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- Certifications Section -->
+            {% if certification_list %}
+            <div class="print-section">
+                <h4 class="print-section-title">Certifications</h4>
+                <div class="row">
+                    {% for certification in certification_list %}
+                    <div class="col-md-6 mb-2">
+                        <div><strong>{{ certification.name }}</strong></div>
+                        <div>{{ certification.issuing_organization }} ({{ certification.issue_date|date:"M Y" }})</div>
+                        {% if certification.credential_id %}
+                        <div>ID: {{ certification.credential_id }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Footer with date -->
+            <div class="mt-5 pt-3 text-center text-muted">
+                <small>Last updated: {% now "F j, Y" %}</small>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
