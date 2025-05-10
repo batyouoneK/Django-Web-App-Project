@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CV - Özgeçmiş{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'cv_app/css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        <!-- Content will be inserted here -->
+        {% endblock %}
+        
+        <footer>
+            <p>© {% now "Y" %} - CV Web Application</p>
+            <p><small>Built with Django</small></p>
+        </footer>
+    </div>
+</body>
+</html>

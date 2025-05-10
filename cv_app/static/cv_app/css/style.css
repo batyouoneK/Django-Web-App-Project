@@ -1,0 +1,120 @@
+/* Black theme CSS for CV Website */
+:root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --accent-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --surface-color: #1e1e1e;
+    --error-color: #cf6679;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--accent-color);
+}
+
+h1, h2, h3 {
+    color: var(--accent-color);
+}
+
+section {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.item {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.item-title {
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.item-subtitle {
+    color: #aaa;
+}
+
+.date {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-tag {
+    background-color: var(--surface-color);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 15px;
+    padding: 5px 12px;
+    font-size: 0.9em;
+}
+
+.profile-photo {
+    max-width: 150px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-color);
+    margin-bottom: 15px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    color: #888;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .item-header {
+        flex-direction: column;
+    }
+}

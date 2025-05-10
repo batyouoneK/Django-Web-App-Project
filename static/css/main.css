@@ -1,0 +1,32 @@
+/* Project-level shared styles */
+:root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --accent-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --surface-color: #1e1e1e;
+    --error-color: #cf6679;
+}
+
+/* Global styles that would be shared across multiple apps */
+.btn {
+    background-color: var(--accent-color);
+    color: #121212;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #9965f4;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: #02b9a8;
+}

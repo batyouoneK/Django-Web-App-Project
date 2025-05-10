@@ -1,0 +1,52 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django files
+*.log
+*.pot
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+media
+
+# Env files
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Local development settings
+local_settings.py
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Docker
+.dockerignore
+
+# Static files collected with collectstatic
+/staticfiles/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*.cover
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

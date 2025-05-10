@@ -1,0 +1,460 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --text-color: #333;
+            --border-color: #dee2e6;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .card {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            padding: 1rem;
+            border-bottom: none;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .form-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+        
+        .item-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-left: 4px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .item-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .item-subtitle {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-dates {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-description {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .delete-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+        }
+        
+        .skill-badge {
+            display: inline-block;
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            padding: 0.35rem 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin: 1rem 0 0.5rem;
+        }
+        
+        .footer {
+            background-color: var(--dark-bg);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 3rem;
+        }
+        
+        .alert {
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <span class="navbar-brand">CV Yönetim Paneli</span>
+            <div>
+                <a href="/" class="btn btn-outline-light btn-sm">Siteyi Görüntüle</a>
+                <a href="/admin/" class="btn btn-outline-light btn-sm ms-2">Django Admin</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Messages/Alerts -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Personal Information Section -->
+        <div class="card">
+            <div class="card-header">
+                Kişisel Bilgiler
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ad Soyad</label>
+                            {{ personal_info_form.name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ünvan</label>
+                            {{ personal_info_form.title }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">E-posta</label>
+                            {{ personal_info_form.email }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Telefon</label>
+                            {{ personal_info_form.phone }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Konum</label>
+                        {{ personal_info_form.location }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Özet</label>
+                        {{ personal_info_form.summary }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fotoğraf</label>
+                        {{ personal_info_form.photo }}
+                    </div>
+                    <button type="submit" name="personal_info_submit" class="btn btn-primary">
+                        {% if has_personal_info %}Güncelle{% else %}Ekle{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Experience Section -->
+        <div class="card">
+            <div class="card-header">
+                İş Deneyimi
+            </div>
+            <div class="card-body">
+                <div class="existing-items mb-4">
+                    <h5>Mevcut İş Deneyimleri</h5>
+                    {% if experiences %}
+                        {% for experience in experiences %}
+                            <div class="item-card">
+                                <div class="item-title">{{ experience.position }}</div>
+                                <div class="item-subtitle">{{ experience.company }}</div>
+                                <div class="item-dates">
+                                    {{ experience.start_date|date:"M Y" }} - 
+                                    {% if experience.is_current %}
+                                        Şu anda
+                                    {% else %}
+                                        {{ experience.end_date|date:"M Y" }}
+                                    {% endif %}
+                                </div>
+                                <div class="item-description">{{ experience.description }}</div>
+                                <form method="post" class="delete-btn">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="experience_id" value="{{ experience.id }}">
+                                    <button type="submit" name="delete_experience" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash"></i> Sil
+                                    </button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">Henüz iş deneyimi eklenmemiş.</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-section">
+                    <h5>Yeni İş Deneyimi Ekle</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Pozisyon</label>
+                                {{ experience_form.position }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Şirket</label>
+                                {{ experience_form.company }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label">Başlangıç Tarihi</label>
+                                {{ experience_form.start_date }}
+                            </div>
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label">Bitiş Tarihi</label>
+                                {{ experience_form.end_date }}
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label class="form-label">Şu Anda</label>
+                                <div class="form-check mt-2">
+                                    {{ experience_form.is_current }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Açıklama</label>
+                            {{ experience_form.description }}
+                        </div>
+                        <button type="submit" name="experience_submit" class="btn btn-primary">Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Education Section -->
+        <div class="card">
+            <div class="card-header">
+                Eğitim
+            </div>
+            <div class="card-body">
+                <div class="existing-items mb-4">
+                    <h5>Mevcut Eğitim Bilgileri</h5>
+                    {% if educations %}
+                        {% for education in educations %}
+                            <div class="item-card">
+                                <div class="item-title">{{ education.degree }} - {{ education.field_of_study }}</div>
+                                <div class="item-subtitle">{{ education.institution }}</div>
+                                <div class="item-dates">
+                                    {{ education.start_date|date:"M Y" }} - 
+                                    {% if education.is_current %}
+                                        Şu anda
+                                    {% else %}
+                                        {{ education.end_date|date:"M Y" }}
+                                    {% endif %}
+                                </div>
+                                {% if education.description %}
+                                    <div class="item-description">{{ education.description }}</div>
+                                {% endif %}
+                                <form method="post" class="delete-btn">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="education_id" value="{{ education.id }}">
+                                    <button type="submit" name="delete_education" class="btn btn-danger btn-sm">Sil</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">Henüz eğitim bilgisi eklenmemiş.</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-section">
+                    <h5>Yeni Eğitim Bilgisi Ekle</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Kurum</label>
+                                {{ education_form.institution }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Derece</label>
+                                {{ education_form.degree }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Alanı</label>
+                                {{ education_form.field_of_study }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label">Başlangıç Tarihi</label>
+                                {{ education_form.start_date }}
+                            </div>
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label">Bitiş Tarihi</label>
+                                {{ education_form.end_date }}
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label class="form-label">Şu Anda</label>
+                                <div class="form-check mt-2">
+                                    {{ education_form.is_current }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Açıklama</label>
+                            {{ education_form.description }}
+                        </div>
+                        <button type="submit" name="education_submit" class="btn btn-primary">Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Skills Section -->
+        <div class="card">
+            <div class="card-header">
+                Yetenekler
+            </div>
+            <div class="card-body">
+                <div class="existing-items mb-4">
+                    <h5>Mevcut Yetenekler</h5>
+                    {% if skill_categories %}
+                        {% for category, skills in skill_categories.items %}
+                            <div class="category-title">{{ category }}</div>
+                            <div class="d-flex flex-wrap">
+                                {% for skill in skills %}
+                                    <div class="skill-badge mb-2 me-2 position-relative">
+                                        {{ skill.name }}
+                                        {% if skill.level == 1 %}
+                                            (Başlangıç)
+                                        {% elif skill.level == 2 %}
+                                            (Orta)
+                                        {% elif skill.level == 3 %}
+                                            (İleri)
+                                        {% elif skill.level == 4 %}
+                                            (Uzman)
+                                        {% endif %}
+                                        <form method="post" class="d-inline ms-2">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="skill_id" value="{{ skill.id }}">
+                                            <button type="submit" name="delete_skill" class="btn btn-danger btn-sm py-0 px-1">×</button>
+                                        </form>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">Henüz yetenek eklenmemiş.</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-section">
+                    <h5>Yeni Yetenek Ekle</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Yetenek Adı</label>
+                                {{ skill_form.name }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Seviye</label>
+                                {{ skill_form.level }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Kategori</label>
+                                {{ skill_form.category }}
+                            </div>
+                        </div>
+                        <button type="submit" name="skill_submit" class="btn btn-primary">Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>CV Web Uygulaması - Django ile Geliştirilmiştir</p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
