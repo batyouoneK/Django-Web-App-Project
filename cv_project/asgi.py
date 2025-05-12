@@ -1,7 +1,7 @@
 """
-ASGI config for cv_project project.
+cv_project projesi için ASGI yapılandırması.
 
-It exposes the ASGI callable as a module-level variable named ``application``.
+``application`` adlı modül seviyesinde bir değişken olarak ASGI çağrılabilir bileşenini dışa açar.
 """
 
 import os

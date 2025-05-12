@@ -1,7 +1,7 @@
 """
-WSGI config for cv_project project.
+cv_project projesi için WSGI yapılandırması.
 
-It exposes the WSGI callable as a module-level variable named ``application``.
+``application`` adlı modül seviyesinde bir değişken olarak WSGI çağrılabilir bileşenini dışa açar.
 """
 
 import os

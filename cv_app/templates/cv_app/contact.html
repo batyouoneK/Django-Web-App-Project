@@ -1,0 +1,152 @@
+{% extends 'cv_app/base.html' %}
+
+{% block title %}İletişim - {{ personal_info.name }}{% endblock %}
+
+{% block content %}
+    <section class="contact-container">
+        <h1 class="section-title">İletişim Bilgileri</h1>
+        
+        <div class="contact-card">
+            {% if personal_info.photo %}
+                <div class="contact-photo">
+                    <img src="{{ personal_info.photo.url }}" alt="{{ personal_info.name }}" style="max-width: 150px; border-radius: 50%;">
+                </div>
+            {% endif %}
+            
+            <div class="contact-info">
+                <h2>{{ personal_info.name }}</h2>
+                <h3>{{ personal_info.title }}</h3>
+                
+                <div class="contact-details">
+                    {% if personal_info.email %}
+                        <div class="contact-item">
+                            <strong>E-posta:</strong>
+                            <span>{{ personal_info.email }}</span>
+                        </div>
+                    {% endif %}
+                    
+                    {% if personal_info.phone %}
+                        <div class="contact-item">
+                            <strong>Telefon:</strong>
+                            <span>{{ personal_info.phone }}</span>
+                        </div>
+                    {% endif %}
+                    
+                    {% if personal_info.location %}
+                        <div class="contact-item">
+                            <strong>Konum:</strong>
+                            <span>{{ personal_info.location }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-message">
+            <p>İş birliği, proje teklifi veya diğer sorularınız için yukarıdaki iletişim bilgilerinden bana ulaşabilirsiniz.</p>
+        </div>
+    </section>
+
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #9b59b6; /* Purple */
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .contact-card {
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+        }
+        
+        .contact-photo {
+            margin-bottom: 20px;
+            border: 3px solid #9b59b6; /* Purple border for photo */
+            border-radius: 50%;
+            padding: 3px;
+        }
+        
+        .contact-info {
+            text-align: center;
+        }
+        
+        .contact-info h2 {
+            margin-bottom: 5px;
+            color: #9b59b6; /* Purple */
+            font-weight: bold;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 20px;
+            color: #ddd;
+            font-weight: normal;
+        }
+        
+        .contact-details {
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .contact-item {
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        .contact-item strong {
+            display: inline-block;
+            width: 80px;
+            color: #9b59b6; /* Purple */
+            font-weight: bold;
+        }
+        
+        .contact-message {
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #9b59b6; /* Purple accent */
+        }
+        
+        @media (min-width: 768px) {
+            .contact-card {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            
+            .contact-photo {
+                margin-right: 30px;
+                margin-bottom: 0;
+            }
+            
+            .contact-info {
+                text-align: left;
+                flex: 1;
+            }
+        }
+    </style>
+{% endblock %}

@@ -3,12 +3,12 @@ from django.urls import reverse
 from django.utils.html import format_html
 from .models import PersonalInfo, Education, Experience, Skill
 
-# Custom admin site header and title
+# Özel admin sitesi başlığı ve başlık çubuğu
 admin.site.site_header = 'CV Web App Admin'
 admin.site.site_title = 'CV Web App Admin'
 admin.site.index_title = 'CV Yönetim Paneli'
 
-# Link to the improved single-page admin
+# Geliştirilmiş tek sayfa admin bağlantısı
 def cv_admin_link(request):
     url = reverse('cv_app:cv_admin')
     return format_html(
@@ -20,10 +20,10 @@ def cv_admin_link(request):
         url
     )
 
-# Add the link to the admin index page
+# Admin ana sayfasına bağlantı ekle
 admin.site.index_template = 'admin/custom_index.html'
 
-# Mixin to add a link to the single-page CV admin panel
+# Tek sayfa CV admin paneline bağlantı eklemek için Mixin
 class CVAdminLinkMixin:
     def cv_admin_button(self, obj=None):
         url = reverse('cv_app:cv_admin')

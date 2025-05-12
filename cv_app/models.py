@@ -1,7 +1,7 @@
 from django.db import models
 
 class PersonalInfo(models.Model):
-    """Model to store basic personal information for the CV"""
+    """CV için temel kişisel bilgileri saklamak için Model"""
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     summary = models.TextField()
@@ -18,7 +18,7 @@ class PersonalInfo(models.Model):
 
 
 class Education(models.Model):
-    """Model to store educational background"""
+    """Eğitim geçmişini saklamak için Model"""
     institution = models.CharField(max_length=100)
     degree = models.CharField(max_length=100)
     field_of_study = models.CharField(max_length=100)
@@ -36,7 +36,7 @@ class Education(models.Model):
 
 
 class Experience(models.Model):
-    """Model to store work experience"""
+    """İş deneyimlerini saklamak için Model"""
     company = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     start_date = models.DateField()
@@ -52,10 +52,10 @@ class Experience(models.Model):
 
 
 class Skill(models.Model):
-    """Model to store skills"""
+    """Yetenekleri saklamak için Model"""
     name = models.CharField(max_length=50)
     level = models.IntegerField(
-        choices=[(1, 'Beginner'), (2, 'Intermediate'), (3, 'Advanced'), (4, 'Expert')],
+        choices=[(1, 'Başlangıç'), (2, 'Orta'), (3, 'İleri'), (4, 'Uzman')],
         default=2
     )
     category = models.CharField(max_length=50, blank=True)

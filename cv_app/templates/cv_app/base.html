@@ -10,14 +10,76 @@
 </head>
 <body>
     <div class="container">
+        <!-- Navigation Menu -->
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{% url 'cv_app:home' %}">Ana Sayfa</a></li>
+                <li><a href="{% url 'cv_app:contact' %}">İletişim</a></li>
+            </ul>
+        </nav>
+        
         {% block content %}
         <!-- Content will be inserted here -->
         {% endblock %}
         
         <footer>
             <p>© {% now "Y" %} - CV Web Application</p>
-            <p><small>Built with Django</small></p>
+            <p><small>Batuhan Kızıltaş - 20200205019</small></p>
         </footer>
     </div>
+    
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            background-color: #222;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-menu {
+            margin: 20px 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #9b59b6;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #aaa;
+        }
+    </style>
 </body>
 </html>

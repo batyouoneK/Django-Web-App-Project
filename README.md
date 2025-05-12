@@ -1,7 +1,6 @@
-## Batuhan Kızıltaş
 # Django CV Web Uygulaması
 
-Bu proje, Docker ile çalışan basit bir Django CV web uygulamasıdır. Siyah bir tema kullanarak profesyonel bir özgeçmiş sitesi oluşturmak için tasarlanmıştır.
+Bu proje, Docker ile çalışan basit bir Django CV (özgeçmiş) web uygulamasıdır. Siyah bir tema kullanarak profesyonel bir özgeçmiş sitesi oluşturmak için tasarlanmıştır.
 
 ## Proje Hakkında
 
@@ -113,4 +112,17 @@ docker-compose exec web python manage.py makemigrations
 docker-compose exec web python manage.py migrate
 ```
 
+## Daha Fazla Özellik Eklemek İçin Fikirler
 
+- Sosyal medya bağlantıları ekleyin
+- Projeler bölümü ekleyin
+- CV'nizi PDF olarak indirme özelliği ekleyin
+- Farklı temalar veya tema seçenekleri ekleyin
+
+
+python manage.py runserver
+admin
+adminpassword123
+---
+
+Bu proje [Django](https://www.djangoproject.com/) kullanılarak oluşturulmuştur.

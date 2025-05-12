@@ -1,23 +1,23 @@
 """
-Django settings for cv_project project.
+Django cv_project projesi için ayarlar.
 """
 
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'
+# Proje içindeki yolları şöyle oluştur: BASE_DIR / 'altdizin'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# In a real project, this would be loaded from environment variables
+# GÜVENLİK UYARISI: üretim ortamında kullanılan gizli anahtarı gizli tutun!
+# Gerçek bir projede, bu çevre değişkenlerinden yüklenirdi
 SECRET_KEY = 'django-insecure-cv-website-dev-key-change-in-production'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# GÜVENLİK UYARISI: üretim ortamında hata ayıklama modunu açık bırakmayın!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
-# Application definition
+# Uygulama tanımları
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,12 +25,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cv_app',  # Our CV application
+    'cv_app',  # Bizim CV uygulamamız
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # For serving static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Statik dosyaları sunmak için
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,8 +59,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cv_project.wsgi.application'
 
-# Database
-# Simple SQLite database for development
+# Veritabanı
+# Geliştirme için basit SQLite veritabanı
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -68,7 +68,7 @@ DATABASES = {
     }
 }
 
-# Password validation
+# Şifre doğrulama
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -84,21 +84,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-LANGUAGE_CODE = 'tr-tr'  # Turkish language
-TIME_ZONE = 'Europe/Istanbul'  # Turkey timezone
+# Dil eklentilerimiz
+LANGUAGE_CODE = 'tr-tr' 
+TIME_ZONE = 'Europe/Istanbul'  
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Statik dosyalar (CSS, JavaScriptve Resimler)
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# WhiteNoise configuration for static files in production
+# Canlı ortamda statik dosyalar için WhiteNoise yapılandırması
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Default primary key field type
+# Varsayılan birincil anahtar alan türü
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

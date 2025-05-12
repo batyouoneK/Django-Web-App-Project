@@ -57,11 +57,11 @@ class SkillForm(forms.ModelForm):
 @staff_member_required
 def cv_admin_view(request):
     """
-    Unified CV admin view with all forms and listings on a single page
+    Tüm formları ve listeleri tek bir sayfada gösteren birleşik CV yönetim görünümü
     """
-    # Process form submissions
+    # Form gönderimlerini işle
     if request.method == 'POST':
-        # Handle Personal Info form
+        # Kişisel Bilgi formunu işle
         if 'personal_info_submit' in request.POST:
             instance = None
             if PersonalInfo.objects.exists():
@@ -73,10 +73,10 @@ def cv_admin_view(request):
                 messages.success(request, 'Kişisel bilgiler başarıyla kaydedildi.')
                 return redirect('cv_app:cv_admin')
             else:
-                # Store the form with errors to display later
+                # Hatalarla birlikte formu daha sonra göstermek üzere sakla
                 personal_info_form = form
         
-        # Handle Education form
+        # Eğitim formunu işle
         elif 'education_submit' in request.POST:
             form = EducationForm(request.POST)
             if form.is_valid():
@@ -86,7 +86,7 @@ def cv_admin_view(request):
             else:
                 education_form = form
         
-        # Handle Experience form
+        # İş deneyimi formunu işle
         elif 'experience_submit' in request.POST:
             form = ExperienceForm(request.POST)
             if form.is_valid():
@@ -96,7 +96,7 @@ def cv_admin_view(request):
             else:
                 experience_form = form
         
-        # Handle Skill form
+        # Yetenek formunu işle
         elif 'skill_submit' in request.POST:
             form = SkillForm(request.POST)
             if form.is_valid():
@@ -106,7 +106,7 @@ def cv_admin_view(request):
             else:
                 skill_form = form
         
-        # Handle delete operations
+        # Silme işlemlerini işle
         elif 'delete_education' in request.POST:
             education_id = request.POST.get('education_id')
             try:
@@ -137,13 +137,13 @@ def cv_admin_view(request):
                 messages.error(request, 'Yetenek bulunamadı.')
             return redirect('cv_app:cv_admin')
     
-    # Initialize forms for GET requests
-    # For PersonalInfo, try to get existing instance or create empty form
+    # GET istekleri için formları başlat
+    # PersonalInfo için, mevcut kaydı almaya çalış veya boş form oluştur
     personal_info_instance = None
     if PersonalInfo.objects.exists():
         personal_info_instance = PersonalInfo.objects.first()
     
-    # Define initial form instances
+    # Başlangıç form örneklerini tanımla
     if not 'personal_info_form' in locals():
         personal_info_form = PersonalInfoForm(instance=personal_info_instance)
     
@@ -156,12 +156,12 @@ def cv_admin_view(request):
     if not 'skill_form' in locals():
         skill_form = SkillForm()
     
-    # Get existing data
+    # Mevcut verileri al
     educations = Education.objects.all().order_by('-start_date')
     experiences = Experience.objects.all().order_by('-start_date')
     skills = Skill.objects.all().order_by('category', '-level')
     
-    # Group skills by category
+    # Yetenekleri kategoriye göre grupla
     skill_categories = {}
     for skill in skills:
         category = skill.category or 'Genel'
@@ -169,7 +169,7 @@ def cv_admin_view(request):
             skill_categories[category] = []
         skill_categories[category].append(skill)
     
-    # Context for the template
+    # Şablon için içerik
     context = {
         'title': 'CV Yönetim Paneli',
         'personal_info_form': personal_info_form,
